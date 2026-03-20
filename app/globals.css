@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Color System ─────────────────────────────────────────── */
+:root {
+  --background: #0a0a0a;
+  --surface: #111111;
+  --card: #1a1a1a;
+  --accent: #00ff88;
+  --accent-secondary: #00d4ff;
+  --text-primary: #f0f0f0;
+  --text-muted: #888888;
+  --border: #2a2a2a;
+}
+
+.light {
+  --background: #f8f8f8;
+  --surface: #ffffff;
+  --card: #f0f0f0;
+  --accent: #00aa55;
+  --accent-secondary: #0099bb;
+  --text-primary: #0a0a0a;
+  --text-muted: #555555;
+  --border: #e0e0e0;
+}
+
+/* ─── Terminal Mode Override ────────────────────────────────── */
+.terminal {
+  --background: #000000;
+  --surface: #0a0a0a;
+  --card: #0d0d0d;
+  --accent: #00ff88;
+  --accent-secondary: #00ff88;
+  --text-primary: #00ff88;
+  --text-muted: #00aa55;
+  --border: #00ff88;
+}
+
+.terminal * {
+  font-family: monospace !important;
+  letter-spacing: 0.02em;
+}
+
+.terminal body {
+  background-color: #000000 !important;
+}
+
+.terminal .font-display {
+  font-family: monospace !important;
+}
+
+/* ─── Base Styles ───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-dm-mono), monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ─── Grain Texture Overlay ────────────────────────────────── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* ─── Custom Scrollbar ──────────────────────────────────────── */
+::-webkit-scrollbar        { width: 6px; }
+::-webkit-scrollbar-track  { background: var(--surface); }
+::-webkit-scrollbar-thumb  { background: var(--accent); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-secondary); }
+* { scrollbar-width: thin; scrollbar-color: var(--accent) var(--surface); }
+
+/* ─── Selection ─────────────────────────────────────────────── */
+::selection {
+  background: rgba(0, 255, 136, 0.2);
+  color: var(--accent);
+}
+
+/* ─── Accessibility — Focus States ─────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Inputs/selects use a subtler inner ring */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.4);
+}
+
+/* ─── Skip Link ─────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 10000;
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: #0a0a0a;
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 0 0 6px 6px;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0;
+  outline: none;
+}
+
+/* ─── Utility Classes ───────────────────────────────────────── */
+@layer utilities {
+  .text-accent            { color: var(--accent); }
+  .text-accent-secondary  { color: var(--accent-secondary); }
+  .bg-surface             { background-color: var(--surface); }
+  .bg-card                { background-color: var(--card); }
+  .border-custom          { border-color: var(--border); }
+  .glow-green             { box-shadow: 0 0 20px rgba(0,255,136,0.3); }
+  .glow-green-sm          { box-shadow: 0 0 8px rgba(0,255,136,0.4); }
+  .glow-cyan              { box-shadow: 0 0 20px rgba(0,212,255,0.3); }
+  .font-display           { font-family: var(--font-syne), sans-serif; }
+
+  /* Consistent active press on all interactive elements */
+  .btn-press:active       { transform: scale(0.97); }
+}
+
+/* ─── Scrollbar hide utility ────────────────────────────────── */
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
